@@ -1,0 +1,67 @@
+--- subvertpy-0.7.2/setup.py.wiget	2010-03-11 15:15:17.000000000 +0100
++++ subvertpy-0.7.2/setup.py	2010-03-11 15:21:02.000000000 +0100
+@@ -76,6 +76,26 @@ def apr_config(arg):
+         res = run_cmd(apr_config_cmd, arg)
+     return res
+ 
++def apu_config(arg):
++    apu_config_cmd = os.getenv("APU_CONFIG")
++    if apu_config_cmd is None:
++        cmds = ["apu-1-config", "/usr/local/apr-utils/bin/apu-1-config", 
++                "/opt/local/bin/apu-1-config", ]
++        for cmd in cmds:
++            try:
++                res = run_cmd(cmd, arg)
++                apu_config_cmd = cmd
++                break
++            except CommandException, e:
++                if not e.not_found():
++                    raise
++        else:
++            raise Exception("apu-config not found."
++                            " Please set APU_CONFIG environment variable")
++    else:
++        res = run_cmd(apu_config_cmd, arg)
++    return res
++
+ 
+ def apr_build_data():
+     """Determine the APR header file location."""
+@@ -84,6 +104,13 @@ def apr_build_data():
+         raise Exception("APR development headers not found")
+     return (includedir,)
+ 
++def apu_build_data():
++    """Determine the APR-UTILS header file location."""
++    includedir = apu_config("--includedir")
++    if not os.path.isdir(includedir):
++        raise Exception("APR-UTILS development headers not found")
++    return (includedir,)
++
+ 
+ def svn_build_data():
+     """Determine the Subversion header file location."""
+@@ -108,8 +135,9 @@ def is_keychain_provider_available():
+     Checks for the availability of the Keychain simple authentication provider in Subversion by compiling a simple test program.
+     """
+     abd = apr_build_data()
++    aubd = apu_build_data()
+     sbd = svn_build_data()
+-    gcc_command_args = ['gcc'] + ['-I' + inc for inc in sbd[0]] + ['-L' + lib for lib in sbd[1]] + ['-I' + abd[0], '-lsvn_subr-1', '-x', 'c', '-']
++    gcc_command_args = ['gcc'] + ['-I' + inc for inc in sbd[0]] + ['-L' + lib for lib in sbd[1]] + ['-I' + abd[0], '-I' + aubd[0], '-lsvn_subr-1', '-x', 'c', '-']
+     (gcc_in, gcc_out, gcc_err) = os.popen3(gcc_command_args)
+     gcc_in.write("""
+ #include <svn_auth.h>
+@@ -223,10 +251,11 @@ if os.name == "nt":
+         return includes, lib_dirs, aprlibs+libs,
+ 
+ (apr_includedir, ) = apr_build_data()
++(apu_includedir, ) = apu_build_data()
+ (svn_includedirs, svn_libdirs, extra_libs) = svn_build_data()
+ 
+ def SvnExtension(name, *args, **kwargs):
+-    kwargs["include_dirs"] = [apr_includedir] + svn_includedirs + ["subvertpy"]
++    kwargs["include_dirs"] = [apr_includedir, apu_includedir] + svn_includedirs + ["subvertpy"]
+     kwargs["library_dirs"] = svn_libdirs
+     if os.name == 'nt':
+         # on windows, just ignore and overwrite the libraries!
