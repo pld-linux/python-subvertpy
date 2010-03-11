@@ -14,6 +14,8 @@ Source0:	http://samba.org/~jelmer/subvertpy/%{module}-%{version}.tar.gz
 # Source0-md5:	01e2098db04ddddaf06a7e27c075745d
 Patch0:		apu_includes.patch
 URL:		http://samba.org/~jelmer/subvertpy/
+BuildRequires:	apr-devel
+BuildRequires:	apr-utils-devel
 BuildRequires:	python-devel
 BuildRequires:	python-modules
 BuildRequires:	rpm-pythonprov
@@ -22,15 +24,14 @@ BuildRequires:	subversion-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Python bindings for the Subversion version control system that are aimed to be
-complete, fast and feel native to Python programmers.
+Python bindings for the Subversion version control system that are
+aimed to be complete, fast and feel native to Python programmers.
 
 %prep
 %setup -q -n %{module}-%{version}
 %patch0 -p1
 
 %build
-export APR_CONFIG=apr-1-config
 python setup.py build
 
 %install
