@@ -7,7 +7,7 @@ Summary:	A Pythonic binding for subversion
 Summary(pl.UTF-8):	Pythonowe wiązanie do subversion
 Name:		python-%{module}
 Version:	0.7.2
-Release:	3
+Release:	4
 License:	LGPLv2.1+
 Group:		Libraries/Python
 Source0:	http://samba.org/~jelmer/subvertpy/%{module}-%{version}.tar.gz
@@ -15,7 +15,7 @@ Source0:	http://samba.org/~jelmer/subvertpy/%{module}-%{version}.tar.gz
 Patch0:		apu_includes.patch
 URL:		http://samba.org/~jelmer/subvertpy/
 BuildRequires:	apr-devel
-BuildRequires:	apr-utils-devel
+BuildRequires:	apr-util-devel
 BuildRequires:	python-devel
 BuildRequires:	python-modules
 BuildRequires:	rpm-pythonprov
