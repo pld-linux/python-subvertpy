@@ -1,18 +1,17 @@
 # TODO:
-# - include examples in package
+# - package tests
 #
 %define		module	subvertpy
 #
 Summary:	A Pythonic binding for subversion
 Summary(pl.UTF-8):	Pythonowe wiązanie do subversion
 Name:		python-%{module}
-Version:	0.7.2
-Release:	4
+Version:	0.7.5
+Release:	1
 License:	LGPLv2.1+
 Group:		Libraries/Python
 Source0:	http://samba.org/~jelmer/subvertpy/%{module}-%{version}.tar.gz
-# Source0-md5:	01e2098db04ddddaf06a7e27c075745d
-Patch0:		apu_includes.patch
+# Source0-md5:	2e84979c7380a396d6beec278f2d6104
 URL:		http://samba.org/~jelmer/subvertpy/
 BuildRequires:	apr-devel
 BuildRequires:	apr-util-devel
@@ -29,7 +28,6 @@ aimed to be complete, fast and feel native to Python programmers.
 
 %prep
 %setup -q -n %{module}-%{version}
-%patch0 -p1
 
 %build
 python setup.py build
