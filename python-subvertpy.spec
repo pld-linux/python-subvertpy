@@ -6,12 +6,12 @@
 Summary:	A Pythonic binding for subversion
 Summary(pl.UTF-8):	Pythonowe wiązanie do subversion
 Name:		python-%{module}
-Version:	0.8.9
+Version:	0.8.10
 Release:	1
 License:	LGPLv2.1+
 Group:		Libraries/Python
 Source0:	http://samba.org/~jelmer/subvertpy/%{module}-%{version}.tar.gz
-# Source0-md5:	e6f9e33bd93269897461dae87cffbfd4
+# Source0-md5:	e8a762128ff5f656fd5488e3d14a8516
 URL:		http://samba.org/~jelmer/subvertpy/
 BuildRequires:	apr-devel
 BuildRequires:	apr-util-devel
