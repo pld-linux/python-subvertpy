@@ -7,7 +7,7 @@ Summary:	A Pythonic binding for subversion
 Summary(pl.UTF-8):	Pythonowe wiązanie do subversion
 Name:		python-%{module}
 Version:	0.8.10
-Release:	1
+Release:	2
 License:	LGPLv2.1+
 Group:		Libraries/Python
 Source0:	http://samba.org/~jelmer/subvertpy/%{module}-%{version}.tar.gz
